@@ -16,14 +16,6 @@
 
 package org.springframework.beans.factory.support;
 
-import java.lang.reflect.Constructor;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.function.Supplier;
-
 import org.springframework.beans.BeanMetadataAttributeAccessor;
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
@@ -36,6 +28,10 @@ import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
+
+import java.lang.reflect.Constructor;
+import java.util.*;
+import java.util.function.Supplier;
 
 /**
  * Base class for concrete, full-fledged {@link BeanDefinition} classes,
@@ -1059,23 +1055,6 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	}
 
 	/**
-	 * Validate and prepare the method overrides defined for this bean.
-	 * Checks for existence of a method with the specified name.
-	 * @throws BeanDefinitionValidationException in case of validation failure
-	 */
-	public void prepareMethodOverrides() throws BeanDefinitionValidationException {
-		// Check that lookup methods exists.
-		if (hasMethodOverrides()) {
-			Set<MethodOverride> overrides = getMethodOverrides().getOverrides();
-			synchronized (overrides) {
-				for (MethodOverride mo : overrides) {
-					prepareMethodOverride(mo);
-				}
-			}
-		}
-	}
-
-	/**
 	 * Validate and prepare the given method override.
 	 * Checks for existence of a method with the specified name,
 	 * marking it as not overloaded if none found.
@@ -1092,6 +1071,23 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 		else if (count == 1) {
 			// Mark override as not overloaded, to avoid the overhead of arg type checking.
 			mo.setOverloaded(false);
+		}
+	}
+
+	/**
+	 * Validate and prepare the method overrides defined for this bean.
+	 * Checks for existence of a method with the specified name.
+	 * @throws BeanDefinitionValidationException in case of validation failure
+	 */
+	public void prepareMethodOverrides() throws BeanDefinitionValidationException {
+		// Check that lookup methods exists.
+		if (hasMethodOverrides()) {
+			Set<MethodOverride> overrides = getMethodOverrides().getOverrides();
+			synchronized (overrides) {
+				for (MethodOverride mo : overrides) {
+					prepareMethodOverride(mo);
+				}
+			}
 		}
 	}
 

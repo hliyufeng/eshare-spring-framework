@@ -17,11 +17,10 @@
 package org.springframework.beans.factory.support;
 
 import org.junit.Test;
-
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.tests.sample.beans.TestBean;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author Rob Harrop
@@ -39,6 +38,7 @@ public class PropertiesBeanDefinitionReaderTests {
 		this.reader.loadBeanDefinitions(new ClassPathResource("simpleConstructorArg.properties", getClass()));
 		TestBean bean = (TestBean)this.beanFactory.getBean("testBean");
 		assertEquals("Rob Harrop", bean.getName());
+		System.out.println("==============success============");
 	}
 
 	@Test

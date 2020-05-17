@@ -7,7 +7,7 @@
         <property name="name" value="${myName}"/>
 	</bean>
 
-	<bean id="alpha" class="org.springframework.beans.factory.FactoryBeanTests$Alpha" autowire="byType"/>
+	<bean id="alpha" class="org.springframework.beans.factory.FactoryBeanTests$Alpha" autowire="byType" />
 
 	<bean id="gamma" class="org.springframework.beans.factory.FactoryBeanTests$Gamma"/>
 
